@@ -5,34 +5,28 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
 @Table(name="orders")
 public class Order {
-
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-    //private String description;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    //@Column(name = "items")
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @MapKeyColumn(name = "items")
-    private HashMap<FoodItem, Integer> items;
-
-    @Column(name = "cost")
-    private double totalCost;
-
-    @Column(name = "customerId")
     private Long customerId;
 
-    @Enumerated(EnumType.STRING)  // Store enum as String in DB
-    private Status status;
+    private LocalDateTime orderTime;
 
-    @Column(name = "createdAt")
-    private LocalDateTime createdAt;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OrderItem> orderItems = new ArrayList<>();
 
+    private Double totalAmount;
+
+    // Getters, Setters, and Utility Methods
 }
+

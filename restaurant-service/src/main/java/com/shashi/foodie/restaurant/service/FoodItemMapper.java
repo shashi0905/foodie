@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class FoodItemMapper {
 
-    public FoodItemDocument toDocument(FoodItem foodItem) {
+    public FoodItemDocument  toDocument(FoodItem foodItem) {
         FoodItemDocument document = new FoodItemDocument();
         document.setId(foodItem.getId());
         document.setName(foodItem.getName());

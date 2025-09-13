@@ -7,6 +7,9 @@ import com.shashi.foodie.restaurant.model.Restaurant;
 import com.shashi.foodie.restaurant.model.RestaurantDocument;
 import com.shashi.foodie.restaurant.repository.FoodItemRepository;
 import com.shashi.foodie.restaurant.repository.RestaurantRepository;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.elasticsearch.client.elc.ElasticsearchTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +19,8 @@ import java.util.List;
 
 @Service
 public class RestaurantService {
+
+    private static final Logger logger = LogManager.getLogger(RestaurantService.class);
 
     private final RestaurantRepository restaurantRepository;
     private final FoodItemRepository foodItemRepository;
@@ -61,6 +66,8 @@ public class RestaurantService {
 
         // Bulk save to Elasticsearch
         List<Object> documents = new ArrayList<>();
+
+        logger.log(Level.INFO,"Adding {} restaurant with {} fooditems to elastic",restaurantDocument.getName(), foodItemDocuments.size());
         documents.add(restaurantDocument);
         documents.addAll(foodItemDocuments);
 
